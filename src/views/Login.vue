@@ -5,8 +5,8 @@
         <div style="width: 400px; margin: 100px auto">
           <div style="font-size: 30px; text-align: center; padding: 30px 0; color: #333">欢迎登录</div>
           <el-form ref="form" :model="form" size="normal" :rules="rules">
-            <el-form-item prop="username">
-              <el-input prefix-icon="el-icon-user-solid" v-model="form.username" placeholder="请输入账号"></el-input>
+            <el-form-item prop="userName">
+              <el-input prefix-icon="el-icon-user-solid" v-model="form.userName" placeholder="请输入账号"></el-input>
             </el-form-item>
             <el-form-item prop="password">
               <el-input prefix-icon="el-icon-lock" v-model="form.password" show-password placeholder="请输入密码"></el-input>
@@ -53,7 +53,7 @@ export default {
       fixStyle: '',
       form: {role: 1},
       rules: {
-        username: [
+        userName: [
           {required: true, message: '请输入用户名', trigger: 'blur'},
         ],
         password: [
@@ -119,13 +119,14 @@ export default {
             this.$message.error("验证码错误")
             return
           }
-          request.post("/user/login", this.form).then(res => {
-            if (res.code === '0') {
+          request.post("/sysUser/login", this.form).then(res => {
+            console.log(res.code)
+            if (res.code === 200) {
               this.$message({
                 type: "success",
                 message: "登录成功"
               })
-              sessionStorage.setItem("user", JSON.stringify(res.data))  // 缓存用户信息
+              sessionStorage.setItem("token", JSON.stringify(res.data.token))  // 缓存用户信息
 
               // 登录成功的时候更新当前路由
               activeRouter()

@@ -1,5 +1,6 @@
 <template>
   <div
+
       class="ValidCode disabled-select"
       :style="`width:${width}; height:${height}`"
       @click="refreshCode"
@@ -13,6 +14,9 @@
 </template>
 
 <script>
+/**
+ * 前端生成验证码
+ */
 export default {
   name: 'ValidCode',
   model: {
@@ -22,10 +26,12 @@ export default {
   props: {
     width: {
       type: String,
+      // default: '100px'
       default: '100px'
     },
     height: {
       type: String,
+      // default: '40px'
       default: '40px'
     },
     length: {
@@ -64,9 +70,11 @@ export default {
         codeList.push({
           code: chars.charAt(Math.floor(Math.random() * charsLen)),
           color: `rgb(${rgb})`,
-          fontSize: `${10 + (+[Math.floor(Math.random() * 10)] + 6)}px`,
-          padding: `${[Math.floor(Math.random() * 10)]}px`,
-          transform: `rotate(${Math.floor(Math.random() * 90) - Math.floor(Math.random() * 90)}deg)`
+          // fontSize: `${10 + (+[Math.floor(Math.random() * 10)] + 2)}px`, //默认字体大小
+          fontSize: `1vw`, //默认字体大小
+          // padding: `${[Math.floor(Math.random() * 10)]}px`,//每个验证码中间的间距
+          padding: `0.2vw`,
+          // transform: `rotate(${Math.floor(Math.random() * 90) - Math.floor(Math.random() * 90)}deg)` //验证码旋转的角度
         })
       }
       // 指向
@@ -76,6 +84,7 @@ export default {
       this.$emit('input', codeList.map(item => item.code).join(''))
     },
     getStyle (data) {
+      // return `background-color:#AEE0FA;color: ${data.color}; font-size: ${data.fontSize}; padding: ${data.padding}; transform: ${data.transform}`
       return `color: ${data.color}; font-size: ${data.fontSize}; padding: ${data.padding}; transform: ${data.transform}`
     }
   }

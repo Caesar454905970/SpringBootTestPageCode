@@ -1,77 +1,63 @@
 <template>
-  <div style="padding: 10px">
-    <el-card>
-      <div id="myChart" :style="{width: '800px', height: '600px'}"></div>
-    </el-card>
-
+  <div>
+    <el-card >
+      <div>
+        <div style="padding: 10px 0">
+          <el-button type="primary" plain @click="load">搜索</el-button>
+        </div>
+        <el-table :data="tableData" style="width: 100%" v-loading="loading">
+          <el-table-column prop="date" label="Date" width="180" />
+          <el-table-column prop="name" label="Name" width="180" />
+          <el-table-column prop="address" label="Address" />
+        </el-table>
+      </div>
+    </el-card >
+    <div>
+      {{this.$store.state.num}}
+    </div>
   </div>
+
+
 </template>
 
-<script>
-import request from "@/utils/request";
+<script setup>
+  import {ref} from "vue";
+  import {useStore} from "vuex"
+  const store =useStore
+  const tableData =ref([])
+  const loading =ref(false) //默认不加载
+  const load = ()=>{
+    loading.value=true //开启加载
+    setTimeout( ()=>{
+      tableData.value= [
+        {
+          date: '2016-05-03',
+          name: 'Tom',
+          address: 'No. 189, Grove St, Los Angeles',
+        },
+        {
+          date: '2016-05-02',
+          name: 'Tom',
+          address: 'No. 189, Grove St, Los Angeles',
+        },
+        {
+          date: '2016-05-04',
+          name: 'Tom',
+          address: 'No. 189, Grove St, Los Angeles',
+        },
+        {
+          date: '2016-05-01',
+          name: 'Tom',
+          address: 'No. 189, Grove St, Los Angeles',
+        },
+      ]
+      loading.value=false //关闭加载
+    },1000)
 
-export default {
-  name: "Home",
-  data() {
-    return {}
-  },
-  mounted() {
-    this.drawLine();
-  },
-  methods: {
-    drawLine() {
-      // 基于准备好的dom，初始化echarts实例
-      let myChart = this.$root.echarts.init(document.getElementById('myChart'))
-      let option = {
-        title: {
-          text: '各地区用户比例统计图',
-          subtext: '虚拟数据',
-          left: 'left'
-        },
-        tooltip: {
-          trigger: 'item'
-        },
-        legend: {
-          trigger: 'item'
-        },
-        toolbox: {
-          show: true,
-          feature: {
-            mark: {show: true},
-            dataView: {show: true, readOnly: false},
-            restore: {show: true},
-            saveAsImage: {show: true}
-          }
-        },
-        series: [
-          {
-            name: '用户比例',
-            type: 'pie',
-            radius: [50, 250],
-            center: ['50%', '50%'],
-            roseType: 'area',
-            itemStyle: {
-              borderRadius: 8
-            },
-            data: []
-          }
-        ]
-      }
-      request.get("/user/count").then(res => {
-        if (res.code === '0') {
-          res.data.forEach(item => {
-            option.series[0].data.push({name: item.address, value: item.count})
-          })
-          // 绘制图表
-          myChart.setOption(option);
-        }
-      })
 
-    }
   }
-}
+  //加载数据
+  // load();
 </script>
 
-<style scoped>
 
-</style>

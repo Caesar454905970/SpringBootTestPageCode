@@ -1,43 +1,65 @@
 <template>
-  <div>
-    <el-menu
-        style="width: 200px; min-height: calc(100vh - 50px)"
-        :default-active="$route.path"
-        router
-    >
-      <div  v-for="m in user.permissions" :key="m.id">
-        <el-menu-item :index="m.path" v-if="m.name !== 'Person' && m.name !== 'Password' ">
-          <i :class="m.icon"></i>  {{ m.comment }}
+
+  <!--左侧栏菜单 menu-->
+  <el-aside width="200px">
+    <div style="width: 200px">
+      <el-menu
+          style="height: calc(100vh - 51px)"
+          default-active="/home"
+          router
+      >
+
+        <el-sub-menu index="1">
+          <template #title>
+            <el-icon><location /></el-icon>
+            <span>菜单一</span>
+          </template>
+          <el-menu-item index="/home">
+            <el-icon><component :is="name"></component></el-icon>
+            <span>主页</span>
+          </el-menu-item>
+          <el-menu-item index="/SysUser">
+            <el-icon><icon-menu /></el-icon>
+            <span>用户管理</span>
+          </el-menu-item>
+        </el-sub-menu>
+
+        <el-menu-item index="2">
+          <el-icon><icon-menu /></el-icon>
+          <span>菜单二</span>
         </el-menu-item>
-      </div>
-    </el-menu>
-  </div>
+      </el-menu>
+    </div>
+  </el-aside>
 </template>
 
-<script>
-import request from "@/utils/request";
+<script setup>
+/**
+ *   <!--左侧栏菜单 menu-->
+ */
+//引入图标库
+import {
+  Location,
+  Document,
+  Menu as IconMenu,
+  Setting,
+  ArrowDown, Apple,
+} from '@element-plus/icons-vue'
+import {reactive, ref,shallowRef} from "vue";
 
-export default {
-  name: "Aside",
-  data() {
-    return {
-      user: {}
-    }
-  },
-  created() {
-    let userStr = sessionStorage.getItem("user") || "{}"
-    this.user = JSON.parse(userStr)
+//定义左侧动态菜单的数据：
+const  items = reactive([
+  { title: '首页',url:'/home'},
+  { title: '用户管理',url:'/'},
+  { title: '角色管理',url:'/'},
+  { title: '权限管理',url:'/'},
+  { title: '设备管理',url:'/'},
 
-    // 请求服务端，确认当前登录用户的 合法信息
-    // request.get("/user/" + this.user.id).then(res => {
-    //   if (res.code === '0') {
-    //     this.user = res.data
-    //   }
-    // })
-  }
-}
+
+])
+
+//定义图标
+const name =shallowRef(Apple) //定义变量的值
+
 </script>
 
-<style scoped>
-
-</style>

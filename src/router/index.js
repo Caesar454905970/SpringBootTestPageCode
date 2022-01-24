@@ -1,78 +1,50 @@
-import {createRouter, createWebHistory} from 'vue-router'
-import Layout from "@/layout/Layout";
-
+//从VueRouter中导入需要的函数模块
+import {createRouter, createWebHashHistory } from 'vue-router'
+// 导入 HelloWorld.vue 组件
 const routes = [
     {
-        path: '/',
-        name: 'Layout',
-        component: Layout,
-        redirect: "/home",
-        children: [
-            {
-                path: 'home',
-                name: 'Home',
-                component: () => import("@/views/Home"),
-            },
+        path: '/login',
+        name:'login',
+        component: () => import('../views/Login/login.vue'),
+        children:[
+
         ]
     },
     {
-        path: '/login',
-        name: 'Login',
-        component: () => import("@/views/Login")
-    },
-    {
-        path: '/register',
-        name: 'Register',
-        component: () => import("@/views/Register")
+        path: '/',
+        name:'Layout',
+        component: () => import('../Layout/index.vue'),
+        children:[
+            {
+                path: 'home',
+                name: 'Home',
+                component: () => import('../views/Home/index.vue'),
+            },
+            {
+                path: 'SysUser',
+                name: 'SysUser',
+                component: () => import('../views/Home/SysUser/index.vue'),
+            },
+        ]
     },
 ]
 
+/*const routes = [
+    { path: '/', component: () => import('../Layout/login.vue'),
+        children:[
+            { path: 'home', component: () => import('../views/Home/login.vue')},
+            { path: 'about', component: () => import('../views/About.vue')},
+        ]}
+]*/
+
+// 3. 创建路由实例并传递 `routes` 配置
+// 你可以在这里输入更多的配置，但我们在这里
+// 暂时保持简单
 const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),
-    routes
+    // 4. 内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
+    history: createWebHashHistory(),
+    routes, // `routes: routes` 的缩写
 })
 
-// 在刷新页面的时候重置当前路由
-activeRouter()
-
-function activeRouter() {
-    const userStr = sessionStorage.getItem("user")
-    if (userStr) {
-        const user = JSON.parse(userStr)
-        let root = {
-            path: '/',
-            name: 'Layout',
-            component: Layout,
-            redirect: "/home",
-            children: []
-        }
-        user.permissions.forEach(p => {
-            let obj = {
-                path: p.path,
-                name: p.name,
-                component: () => import("@/views/" + p.name)
-            };
-            root.children.push(obj)
-        })
-        if (router) {
-            router.addRoute(root)
-        }
-    }
-}
-
-router.beforeEach((to, from, next) => {
-    if (to.path === '/login' || to.path === '/register') {
-        next()
-        return
-    }
-    let user = sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : {}
-    if (!user.permissions || !user.permissions.length) {
-        next('/login')
-    } else if (!user.permissions.find(p => p.path === to.path)) {
-        next('/login')
-    } else {
-        next()
-    }
-})
-
+//导出router
 export default router
