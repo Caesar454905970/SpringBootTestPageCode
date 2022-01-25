@@ -8,7 +8,7 @@
         <el-row style="height: 10vh">
           <br>
         </el-row>
-        <el-row style="height: 80vh;background-color: #FFFFFF;border-radius: 20px 0 0 20px;">
+        <el-row style="height: 80vh;background-color: #FFFFFF;border-radius: 20px 0 0 20px; opacity:0.8;">
           <!--左侧内容-->
           <el-row style="height: 20.8vh;width: 100vw;">
             <!--reem-logo-->
@@ -35,7 +35,7 @@
         <el-row style="height: 10vh">
           <br>
         </el-row>
-        <el-row style="height: 80vh;background-color: #FFFFFF;border-radius: 0 20px 20px 0;">
+        <el-row style="height: 80vh;background-color: #FFFFFF;border-radius: 0 20px 20px 0;opacity:0.8;">
 
           <el-row style="height: 18vh;width: 100vw;">
             <br>
@@ -46,7 +46,7 @@
             <el-col :span="14" style="">
               <!--心血管自主神经系统-->
               <el-row style="height:4vh;  justify-content: center;">
-                <span class="title-font">心血管自主神经检测系统</span>
+                <span class="title-font">vue3.2+vite2后台管理系统</span>
               </el-row>
               <el-row style="height:12vh;">
                 <br>
@@ -70,6 +70,7 @@
                   </el-form-item>
                   <el-form-item prop="password" style="width: 100%;height:5vh;">
                     <el-input
+                        class="pwd_input"
                         show-password
                         size="large"
                         clearable
@@ -94,7 +95,7 @@
                         </el-col>
                         <el-col :span="2"><br></el-col>
                         <el-col :span="8">
-                          <div style="background-color: skyblue;border-radius:3px">
+                          <div style="background-color: #a9e6ff;border-radius:3px">
                             <ValidCode @input="createValidCode" />
 
                           </div>
@@ -272,36 +273,44 @@ const  createValidCode= (data)=>{
 
 </script>
 <style lang='less' scoped>
+//使用样式穿透
+.pwd_input {
+  ::v-deep .el-input__icon{
+    padding-left: 10px;
+  }
+}
+
 .login{
   width: 100vw;
   height: 100vh;
-  background-image: url("../../assets/images/login-background.png");
+  background-image: url("../../assets/images/login-background.jpg");
   background-size: cover;//---把背景图片放大到适合元素容器的尺寸，图片比例不变，但是要注意，超出容器的部分可能会裁掉
 
 }
 .login-left-logo{
   //690 408
   background-size: 100% 100% ;
-  background-image: url('../../assets/images/login-left-logo.png');
+  background-image: url('../../assets/images/login-left-logo.svg');
   //background-size: 100% no-repeat;//---把背景图片放大到适合元素容器的尺寸，图片比例不变，但是要注意，超出容器的部分可能会裁掉
 }
 .reem-logo{
 
-  margin-top: 2.7vh;
-  margin-left: 2.6vh;
-  //
-  //width: 5vw;
-  //height: 2vh;
-  width: 103px;
-  height: 29px;
-  //background-size: 100% 100%;//
-  background-size: cover;
-  background-image: url('../../assets/images/reem-logo.png');
+  //margin-top: 2.7vh;
+  //margin-left: 2.6vh;
+  ////
+  ////width: 5vw;
+  ////height: 2vh;
+  //width: 80px;
+  //height: 22.5px;
+  ////background-size: 100% 100%;//
+  //background-size: cover;
+  //background-image: url('../../assets/images/reem-logo.png');
 }
 
 .title-font{
   height:4vh;
   font-size: 1.5vw;
+  font-weight :bold;
 }
 @media screen and (min-width: 801px) and (max-width: 941px) {
   .login-left-logo {
