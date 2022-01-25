@@ -20,7 +20,7 @@
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item>个人信息</el-dropdown-item>
-              <el-dropdown-item>退出</el-dropdown-item>
+              <el-dropdown-item @click="Logout" >退出</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -41,6 +41,27 @@ import {
   Setting,
   ArrowDown,
 } from '@element-plus/icons-vue'
+import router from "../router";
+import {ElMessage} from "element-plus";
+import {logout} from '../api/login'
+const Logout=()=>{
+  //toekn失效
+  logout().then(res => {
+    if(res.code ===200){
+      ElMessage({
+        message: res.msg,
+        type: 'success',
+        showClose: true,
+        duration: 1000,
+      })
+      //删除sessionStorage中的token
+      window.sessionStorage.removeItem("SysUserToken")
+      router.push(('/'))
+
+    }
+
+  })
+}
 
 </script>
 

@@ -13,7 +13,7 @@
       </div>
     </el-card >
     <div>
-      {{this.$store.state.num}}
+<!--      {{num}}-->
     </div>
   </div>
 
@@ -24,6 +24,7 @@
   import {ref} from "vue";
   import {useStore} from "vuex"
   const store =useStore
+  // const num =store.state.num
   const tableData =ref([])
   const loading =ref(false) //默认不加载
   const load = ()=>{

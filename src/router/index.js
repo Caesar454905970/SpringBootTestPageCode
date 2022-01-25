@@ -23,7 +23,7 @@ const routes = [
             {
                 path: 'SysUser',
                 name: 'SysUser',
-                component: () => import('../views/Home/SysUser/index.vue'),
+                component: () => import('../views/system/user/user.vue'),
             },
         ]
     },
@@ -46,18 +46,18 @@ const router = createRouter({
     routes, // `routes: routes` 的缩写
 })
 
-
+//路由拦截
 router.beforeEach((to, from, next) => {
     if (to.path === '/login' || to.path === '/register') {
         next()
         return
     }
-    let user = sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : {}
-    if (!user.permissions || !user.permissions.length) {
+    const SysUserToken=sessionStorage.getItem("SysUserToken")
+    // let user = localStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : {}
+    // if (!user.permissions || !user.permissions.length) {
+    if (SysUserToken==null || SysUserToken==="" || SysUserToken===undefined ) {
         next('/login')
-    } else if (!user.permissions.find(p => p.path === to.path)) {
-        next('/login')
-    } else {
+    }  else {
         next()
     }
 })

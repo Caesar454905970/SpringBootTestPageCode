@@ -1,21 +1,16 @@
 import { createStore } from 'vuex'
-// 组件通信：状态管理器
-export default createStore({
-    state: {
-        num:888,
-        user: {}
+
+// 创建一个新的 store 实例
+const store = createStore({
+    state () {
+        return {
+            count: 0
+        }
     },
     mutations: {
-        SET_USER(state, user) {
-            state.user = user
+        increment (state) {
+            state.count++
         }
-    },
-    actions: {
-        SET_USER({commit}, user) {
-            this.state.user = user
-        }
-    },
-    getters: {
-        getUser: (state) => state.user
     }
 })
+export { store }

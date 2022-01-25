@@ -87,7 +87,12 @@
                   <el-form-item  prop="validCode">
                       <el-row>
                         <el-col :span="14">
-                          <el-input clearable size="large"   class="validCode" prefix-icon="el-icon-key" v-model="loginForm.validCode" style="width: 100%;" placeholder="请输入验证码">
+                          <el-input clearable size="large"
+                                    @keyup.enter.native="submitLoginForm"
+                                    class="validCode" prefix-icon="el-icon-key"
+                                    v-model="loginForm.validCode"
+                                    style="width: 100%;"
+                                    placeholder="请输入验证码">
                             <template #prefix >
                               <el-icon style="margin:auto" class="iconfont icon-yanzhengma"></el-icon>
                             </template>
@@ -97,7 +102,6 @@
                         <el-col :span="8">
                           <div style="background-color: #a9e6ff;border-radius:3px">
                             <ValidCode @input="createValidCode" />
-
                           </div>
                         </el-col>
                       </el-row>
@@ -135,10 +139,11 @@
 </template>
 
 <script  setup>
+import { ElMessage } from 'element-plus'
 import ValidCode from '../../components/ValidCode.vue' //引入验证码组件
 import {reactive, ref} from "vue";
 import { onMounted, onUnmounted } from 'vue'
-import {Login} from '../../utils/api.js'
+import {Login} from '../../api/login.js'
 // import {useRouter} from 'vue-router'
 import {
   CircleCheck,
@@ -146,7 +151,7 @@ import {
   Unlock,
    UserFilled,
 } from '@element-plus/icons-vue'
-import router from  '../../router/index.js'
+import router from '../../router'
 
 
 onMounted(() => {
@@ -239,18 +244,28 @@ onMounted(() => {
         return //拦截
       }
      if(loginForm.validCode.toLowerCase() !== validCode.value.toLowerCase()) {
-       console.log("验证码错误")
+       ElMessage.error('验证码错误')
+       // console.log("验证码错误")
        return
      }
 
       //预验证通过
       // console.log("表单预校验验证成功")
 
-     //数据交互
+     //数据交互(调用utils/api.js请求方法)
      Login(loginForm).then(res => {
        //接受到响应结果
        if(res.code ===200){
+         //保存token进入localstorage
+         sessionStorage.setItem("SysUserToken",res.data.token)
+         //保存用户信息放入store
          //页面跳转:到主页
+         ElMessage({
+           message: res.msg,
+           type: 'success',
+           showClose: true,
+           duration: 1000,
+         })
          router.push('/home');
        }else {
          alert("登录失败")

@@ -2,16 +2,22 @@
  * axios的请求的相关设置封装成 service 在api中进行调用 service方法
  */
 import axios from 'axios'
+import router from "../router";
 // axios封装：统一处理请求头
 const service = axios.create({
     baseURL: "http://localhost:8888",
-    timeout: 5000
+    // baseURL: "http://111.229.91.20:8081",
+    // timeout: 10000
 })
 
-//添加请求拦截器
+//添加请求拦截器ss
 // 可以自请求发送前对请求做一些处理
 // 比如统一加token，对请求参数统一加密
 service.interceptors.request.use(config =>{
+    const  SysUserToken= window.sessionStorage.getItem("SysUserToken")
+    if(SysUserToken){ //token不存在；不携带；login
+        config.headers['token'] =SysUserToken// 让每个请求携带自定义token 请根据实际情况自行修改
+    }
     return config;
 } ,error => {
     return Promise.reject(error)

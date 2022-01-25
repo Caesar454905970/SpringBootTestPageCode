@@ -12,7 +12,7 @@
         <el-sub-menu index="1">
           <template #title>
             <el-icon><location /></el-icon>
-            <span>菜单一</span>
+            <span>系统管理</span>
           </template>
           <el-menu-item index="/home">
             <el-icon><component :is="name"></component></el-icon>
@@ -24,10 +24,10 @@
           </el-menu-item>
         </el-sub-menu>
 
-        <el-menu-item index="2">
-          <el-icon><icon-menu /></el-icon>
-          <span>菜单二</span>
-        </el-menu-item>
+<!--        <el-menu-item index="2">-->
+<!--          <el-icon><icon-menu /></el-icon>-->
+<!--          <span>菜单二</span>-->
+<!--        </el-menu-item>-->
       </el-menu>
     </div>
   </el-aside>
