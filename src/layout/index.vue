@@ -84,9 +84,9 @@
 </template>
 
 <script  setup>
-import Aside from '../components/Aside.vue'  //导入左侧栏菜单组件
-import Header from '../components/Header.vue'  //头部内容区域 Header ：组件
-import Main from '../components/Main.vue'  //右部内容区域 ：组件
+import Aside from './components/Aside.vue'  //导入左侧栏菜单组件
+import Header from './components/Header.vue'  //头部内容区域 Header ：组件
+import Main from './components/Main.vue'  //右部内容区域 ：组件
 
 //引入图标库
 import {

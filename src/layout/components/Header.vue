@@ -41,10 +41,15 @@ import {
   Setting,
   ArrowDown,
 } from '@element-plus/icons-vue'
-import router from "../router";
+import router from "../../router";
 import {ElMessage} from "element-plus";
-import {logout} from '../api/login'
+import {logout} from '../../api/login'
 const Logout=()=>{
+  console.log("我点击了退出")
+  //删除sessionStorage中的token
+  window.sessionStorage.removeItem("SysUserToken")
+  router.push(('/'))
+  console.log(window.sessionStorage.getItem("SysUserToken"))
   //toekn失效
   logout().then(res => {
     if(res.code ===200){
@@ -54,9 +59,7 @@ const Logout=()=>{
         showClose: true,
         duration: 1000,
       })
-      //删除sessionStorage中的token
-      window.sessionStorage.removeItem("SysUserToken")
-      router.push(('/'))
+
 
     }
 

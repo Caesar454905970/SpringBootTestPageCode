@@ -18,9 +18,14 @@
             <el-icon><component :is="name"></component></el-icon>
             <span>主页</span>
           </el-menu-item>
+
           <el-menu-item index="/SysUser">
             <el-icon><icon-menu /></el-icon>
             <span>用户管理</span>
+          </el-menu-item>
+          <el-menu-item index="/sysRole">
+            <el-icon><icon-menu /></el-icon>
+            <span>角色管理</span>
           </el-menu-item>
         </el-sub-menu>
 

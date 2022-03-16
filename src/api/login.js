@@ -8,11 +8,11 @@ import service from "../utils/request.js";
  * @constructor
  */
 //登录方法
-export function Login(data){
+export function Login(formData){
     return service({
         method:'post',  //请求的方法
         url:`/sysUser/login`, //请求的地址
-        data    //提交的参数
+        data: formData    //提交的参数
     })
 }
 //登出登录方法

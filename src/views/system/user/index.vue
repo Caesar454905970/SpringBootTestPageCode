@@ -1,5 +1,13 @@
 <template>
   <div>
+    <el-rwo>
+      <el-button
+          type="primary"
+          plain
+          icon="Plus"
+          @click="handleAdd"
+      >新增</el-button>
+    </el-rwo>
     <el-card >
       <div>
 
@@ -18,6 +26,14 @@
           <el-table-column prop="updateBy" label="更新人" />
           <el-table-column prop="updateTime" label="更新时间" />
         </el-table>
+
+        <pagination
+            v-show="total > 0"
+            :total="total"
+            v-model:page="queryParams.pageNum"
+            v-model:limit="queryParams.pageSize"
+            @pagination="getUserList"
+        />
       </div>
     </el-card >
   </div>
@@ -32,24 +48,42 @@ import {
   Search,
   Unlock,
   UserFilled,
+
 } from '@element-plus/icons-vue'
-import {listUser} from "../../../api/system/user";
-import {onMounted, reactive, ref} from "vue";
+import pagination from '../../../components/Pagination/index.vue'
+import {listUser} from "../../../api/system/user.js";
+import {onMounted, reactive, ref, toRefs} from "vue";
 const userList = ref([]); //用户列表
+const total = ref(0);
 const data =reactive({
   queryParams:{
     pageNum:1,
-    pageSize:1,
+    pageSize:10,
   }
 })
+const { queryParams } = toRefs(data);
 onMounted(() => {
   getUserList()
 })
 const getUserList = ()=>{
   listUser(data.queryParams).then(res =>{
     userList.value=res.data.records
+    total.value =res.data.total
   })
 }
+
+/** 新增按钮操作 */
+function handleAdd() {
+  // reset(); /** 重置操作表单 */
+  // initTreeData(); /** 初始化部门数据 */
+  getUser().then(response => {
+    postOptions.value = response.posts;
+    roleOptions.value = response.roles;
+    open.value = true;
+    title.value = "添加用户";
+    form.password.value = initPassword.value;
+  });
+};
 </script>
 
 <style lang='less' scoped>

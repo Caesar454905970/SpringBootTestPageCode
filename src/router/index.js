@@ -5,7 +5,7 @@ const routes = [
     {
         path: '/login',
         name:'login',
-        component: () => import('../views/Login/login.vue'),
+        component: () => import('../views/Login/index.vue'),
         children:[
 
         ]
@@ -23,16 +23,22 @@ const routes = [
             {
                 path: 'SysUser',
                 name: 'SysUser',
-                component: () => import('../views/system/user/user.vue'),
+                component: () => import('../views/system/user/index.vue'),
             },
+            {
+                path: 'sysRole',
+                name: 'sysRole',
+                component: () => import('../views/system/role/index.vue'),
+            },
+
         ]
     },
 ]
 
 /*const routes = [
-    { path: '/', component: () => import('../Layout/login.vue'),
+    { path: '/', component: () => import('../Layout/index.vue'),
         children:[
-            { path: 'home', component: () => import('../views/Home/login.vue')},
+            { path: 'home', component: () => import('../views/Home/index.vue')},
             { path: 'about', component: () => import('../views/About.vue')},
         ]}
 ]*/

@@ -5,7 +5,7 @@ import axios from 'axios'
 import router from "../router";
 // axios封装：统一处理请求头
 const service = axios.create({
-    baseURL: "http://localhost:8888",
+    baseURL: "http://localhost:8081",
     // baseURL: "http://111.229.91.20:8081",
     // timeout: 10000
 })

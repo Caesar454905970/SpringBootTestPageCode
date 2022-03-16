@@ -138,9 +138,9 @@
 
 </template>
 
-<script  setup>
+<script  setup >
 import { ElMessage } from 'element-plus'
-import ValidCode from '../../components/ValidCode.vue' //引入验证码组件
+import ValidCode from '../../components/ValidCode/ValidCode.vue' //引入验证码组件
 import {reactive, ref} from "vue";
 import { onMounted, onUnmounted } from 'vue'
 import {Login} from '../../api/login.js'
@@ -174,7 +174,7 @@ onMounted(() => {
         loginForm.userName=reemUserPwd.userName
         loginForm.password=reemUserPwd.password
         loginForm.rememberMe=reemUserPwd.rememberMe
-        console.log("加载3个数据成功")
+        console.log("记住密码：加载3个数据成功")
       // }
 
     // }
@@ -251,6 +251,9 @@ onMounted(() => {
 
       //预验证通过
       // console.log("表单预校验验证成功")
+
+     //登录之前要删除本地的session中的token
+     sessionStorage.removeItem("SysUserToken")
 
      //数据交互(调用utils/api.js请求方法)
      Login(loginForm).then(res => {
